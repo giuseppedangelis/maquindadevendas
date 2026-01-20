@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Download, Smartphone } from "lucide-react";
+import { Download } from "lucide-react";
+import ctaIcon from "@/assets/cta-icon.svg";
 
 const CTASection = () => {
   return (
@@ -23,9 +24,13 @@ const CTASection = () => {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-20 h-20 rounded-full gradient-orange flex items-center justify-center mx-auto mb-8 glow-orange"
+            className="flex justify-center mb-8"
           >
-            <Smartphone className="w-10 h-10 text-foreground" />
+            <img 
+              src={ctaIcon} 
+              alt="Máquina de Vendas App" 
+              className="w-16 h-16 object-contain"
+            />
           </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">

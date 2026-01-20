@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "./NavLink";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import logoWhite from "@/assets/logo-white.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
@@ -20,6 +21,9 @@ const Header = () => {
   const navItems = [
     { path: "/", label: "Início" },
     { path: "/privacy", label: "Privacidade" },
+    { path: "/terms", label: "Termos de Uso" },
+    { path: "/support", label: "Suporte" },
+    { path: "/account-deletion", label: "Exclusão de Conta" },
   ];
 
   return (
@@ -42,10 +46,11 @@ const Header = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="flex items-center space-x-3"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold gradient-text">Máquina de Vendas</span>
+            <img 
+              src={logoWhite} 
+              alt="Máquina de Vendas" 
+              className="h-10 lg:h-12 w-auto object-contain"
+            />
           </motion.div>
 
           {/* Desktop Navigation */}

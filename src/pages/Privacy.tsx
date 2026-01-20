@@ -7,38 +7,64 @@ import { NavLink } from "@/components/NavLink";
 import Footer from "@/components/landing/Footer";
 
 const PrivacyPage = () => {
-  const sections = [
-    {
-      icon: Shield,
-      title: "Coleta de Dados",
-      content: "Coletamos apenas informações essenciais para fornecer nossos serviços, incluindo dados de contato e informações de uso do sistema."
-    },
-    {
-      icon: Lock,
-      title: "Armazenamento Seguro",
-      content: "Todos os dados são armazenados em servidores criptografados com padrões de segurança industriais."
-    },
-    {
-      icon: Eye,
-      title: "Transparência",
-      content: "Você tem direito total para acessar, corrigir ou excluir seus dados a qualquer momento."
-    },
-    {
-      icon: Database,
-      title: "Uso de Dados",
-      content: "Seus dados são usados exclusivamente para melhorar nossos serviços e fornecer suporte personalizado."
-    },
-    {
-      icon: UserCheck,
-      title: "Consentimento",
-      content: "Obtemos seu consentimento explícito antes de coletar ou processar qualquer informação pessoal."
-    },
-    {
-      icon: AlertCircle,
-      title: "Notificações",
-      content: "Informamos imediatamente sobre qualquer alteração em nossas políticas de privacidade."
+  const privacyData = {
+    title: "Política de Privacidade\n App Máquina de Vendas",
+    introduction: "A sua privacidade é fundamental para nós. Esta Política de Privacidade descreve como a CRIS REIS ESCOLA DE EMPRESÁRIOS LTDA (CNPJ: 33.546.747/0001-07), desenvolvedora do aplicativo Máquina de Vendas, coleta, usa, armazena e protege os seus dados.\nAo utilizar o nosso aplicativo, você concorda com as práticas descritas neste documento.",
+    
+    sections: [
+      {
+        title: "1. Dados que Coletamos",
+        icon: Database,
+        content: [
+          "Dados de Cadastro: Nome, e-mail, telefone, nome da empresa, cargo.",
+          "Dados de Uso do Aplicativo: Informações sobre as funcionalidades que você utiliza, frequência de uso, interações com a interface.",
+          "Dados Inseridos no Aplicativo: Metas de vendas, resultados de vendas, nomes de vendedores, valores, produtos e outras informações que você e seu time inserem para a gestão comercial. Estes dados são de sua propriedade e tratados como estritamente confidenciais."
+        ]
+      },
+      {
+        title: "2. Como Usamos os Seus Dados",
+        icon: Eye,
+        content: [
+          "Fornecer e Manter o Serviço: Autenticar seu acesso, exibir seus dashboards e permitir o uso das funcionalidades do app.",
+          "Melhorar o Aplicativo: Analisar dados de uso de forma anonimizada para identificar bugs, melhorar a usabilidade e desenvolver novas funcionalidades.",
+          "Comunicação: Enviar notificações importantes sobre sua conta, atualizações do app e informações sobre nossos serviços.",
+          "Suporte ao Cliente: Ajudar a resolver problemas técnicos e responder às suas dúvidas."
+        ]
+      },
+      {
+        title: "3. Armazenamento e Segurança",
+        icon: Lock,
+        content: [
+          "Seus dados são armazenados em servidores seguros em nuvem, com as melhores práticas de segurança do mercado, incluindo criptografia de ponta-a-ponta para proteger suas informações contra acessos não autorizados."
+        ]
+      },
+      {
+        title: "4. Compartilhamento de Dados",
+        icon: AlertCircle,
+        content: [
+          "Nós não vendemos, alugamos ou compartilhamos seus dados pessoais ou os dados comerciais inseridos no app com terceiros para fins de marketing.",
+          "Podemos compartilhar informações com provedores de serviços (como servidores em nuvem) que nos ajudam a operar o aplicativo, mas eles são contratualmente obrigados a manter a confidencialidade e segurança dos dados."
+        ]
+      },
+      {
+        title: "5. Seus Direitos (LGPD)",
+        icon: UserCheck,
+        content: [
+          "Acessar seus dados a qualquer momento.",
+          "Corrigir dados incompletos, inexatos ou desatualizados.",
+          "Solicitar a anonimização, bloqueio ou eliminação de dados desnecessários.",
+          "Solicitar a portabilidade dos seus dados a outro fornecedor de serviço.",
+          "Solicitar a exclusão da sua conta e de todos os seus dados."
+        ]
+      }
+    ],
+    
+    contact: {
+      title: "6. Contato",
+      content: "Se você tiver qualquer dúvida sobre esta Política de Privacidade, entre em contato conosco pelo e-mail: suporte@maquinadevendas.app",
+      company: "Copyright 2025 - CRIS REIS ESCOLA DE EMPRESÁRIOS - CNPJ: 33.546.747/0001-07 - Todos os direitos reservados"
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,8 +98,8 @@ const PrivacyPage = () => {
               </span>
             </h1>
             
-            <p className="text-xl text-gray-text leading-relaxed max-w-2xl mx-auto">
-              Sua privacidade é nossa prioridade. Saiba como protegemos e gerenciamos seus dados.
+            <p className="text-xl text-gray-text leading-relaxed max-w-2xl mx-auto whitespace-pre-line">
+              {privacyData.introduction}
             </p>
           </motion.div>
         </div>
@@ -84,170 +110,71 @@ const PrivacyPage = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-4xl mx-auto">
             
-            {/* Introduction */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mb-16"
-            >
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-foreground">
-                    Nossa Missão de Privacidade
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-gray-text leading-relaxed">
-                    Na Máquina de Vendas, estamos comprometidos em proteger sua privacidade e garantir 
-                    a segurança das suas informações. Esta política descreve como coletamos, usamos, 
-                    armazenamos e protegemos seus dados pessoais.
-                  </p>
-                  <p className="text-gray-text leading-relaxed">
-                    Respeitamos sua privacidade e operamos em conformidade com a Lei Geral de Proteção 
-                    de Dados (LGPD) e outras regulamentações aplicáveis de proteção de dados.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Privacy Principles Grid */}
-            <div className="grid md:grid-cols-2 gap-6 mb-16">
-              {sections.map((section, index) => (
-                <motion.div
-                  key={section.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
-                >
-                  <Card className="bg-card/30 backdrop-blur-sm border-border/30 card-hover h-full">
+            {/* Privacy Sections */}
+            {privacyData.sections.map((section, index) => (
+              <motion.div
+                key={section.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
+                className="mb-12"
+              >
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader>
                     <CardHeader className="flex flex-row items-center space-y-0 pb-4">
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4">
                         <section.icon className="w-6 h-6 text-primary" />
                       </div>
-                      <CardTitle className="text-lg font-semibold text-foreground">
+                      <CardTitle className="text-2xl font-bold text-foreground">
                         {section.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-text leading-relaxed">
-                        {section.content}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Data Categories */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="mb-16"
-            >
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-foreground mb-4">
-                    Categorias de Dados Coletados
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-3">
-                        Dados Pessoais
-                      </h3>
-                      <ul className="space-y-2 text-gray-text">
-                        <li>• Nome completo</li>
-                        <li>• Endereço de e-mail</li>
-                        <li>• Telefone de contato</li>
-                        <li>• Cargo e empresa</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-3">
-                        Dados de Uso
-                      </h3>
-                      <ul className="space-y-2 text-gray-text">
-                        <li>• Dados de navegação</li>
-                        <li>• Interações com o sistema</li>
-                        <li>• Preferências de uso</li>
-                        <li>• Dados de performance</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Rights Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
-              className="mb-16"
-            >
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-foreground mb-4">
-                    Seus Direitos
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">
-                        Acesso e Retificação
-                      </h3>
-                      <p className="text-gray-text">
-                        Você tem direito de acessar seus dados e solicitar correções de informações incorretas.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">
-                        Portabilidade e Exclusão
-                      </h3>
-                      <p className="text-gray-text">
-                        Solicite a portabilidade de seus dados ou sua exclusão a qualquer momento.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">
-                        Revogação de Consentimento
-                      </h3>
-                      <p className="text-gray-text">
-                        Você pode revogar seu consentimento a qualquer momento sem afetar serviços já prestados.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">
-                        Informações de Contato
-                      </h3>
-                      <p className="text-gray-text">
-                        Entre em contato através do e-mail privacidade@maquinadevendas.com para exercer seus direitos.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {section.content.map((item, itemIndex) => (
+                      <div key={itemIndex} className="flex items-start">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0" />
+                        <p className="text-gray-text leading-relaxed flex-1">
+                          {item}
+                        </p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
 
             {/* Contact Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="text-center"
+              transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold mb-6 gradient-text">
-                Dúvidas ou Preocupações?
-              </h2>
-              <p className="text-gray-text mb-8 max-w-2xl mx-auto">
-                Nossa equipe de proteção de dados está disponível para responder 
-                todas as suas perguntas sobre privacidade e segurança.
+              <Card className="bg-card/50 backdrop-blur-sm border-border/50 mb-8">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-foreground">
+                    {privacyData.contact.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-text leading-relaxed">
+                    {privacyData.contact.content}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Copyright */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <p className="text-sm text-gray-text">
+                {privacyData.contact.company}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                 <Button
                   size="lg"
                   className="gradient-orange glow-orange-sm hover:scale-105 transition-transform duration-300"

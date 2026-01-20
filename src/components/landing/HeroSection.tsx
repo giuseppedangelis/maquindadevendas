@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import heroMockup from "@/assets/hero-phone-mockup.png";
+import heroMockup from "@/assets/hero-site.svg";
 
 const HeroSection = () => {
   return (
@@ -71,7 +71,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent blur-3xl -z-10" />
               <img
                 src={heroMockup}
-                alt="Dashboard Máquina de Vendas"
+                alt="Máquina de Vendas - Sistema de Previsibilidade"
                 className="w-full max-w-md lg:max-w-lg xl:max-w-xl drop-shadow-2xl"
               />
             </motion.div>
