@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/sistema",
-            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/sistema/"
+            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/"
         },
         {
             "source": "/sistema/:match*",
-            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/sistema/:match*"
+            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/:match*"
         }
     ]
 }
