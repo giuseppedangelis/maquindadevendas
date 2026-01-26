@@ -60,6 +60,11 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## 📘 Padrões de Desenvolvimento
+
+Para garantir consistência e qualidade, consulte nosso manual de padrões:
+👉 **[FRONTEND_STANDARDS.md](./FRONTEND_STANDARDS.md)**
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

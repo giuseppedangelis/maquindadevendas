@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/sistema",
+            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/sistema/"
+        },
+        {
+            "source": "/sistema/:match*",
+            "destination": "https://git-github-com-giuseppedangelis-maq-seven.vercel.app/sistema/:match*"
+        }
+    ]
+}
