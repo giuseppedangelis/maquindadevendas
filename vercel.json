@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/sistema",
-            "destination": "maquinadevendas-seven.vercel.app/"
+            "destination": "https://maquinadevendas-seven.vercel.app/"
         },
         {
             "source": "/sistema/:match*",
-            "destination": "maquinadevendas-seven.vercel.app/:match*"
+            "destination": "https://maquinadevendas-seven.vercel.app/:match*"
         }
     ]
 }
