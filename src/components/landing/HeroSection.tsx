@@ -50,6 +50,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 className="gradient-orange text-lg sm:text-xl font-bold px-8 sm:px-12 py-6 sm:py-8 rounded-xl glow-orange hover:scale-105 transition-transform duration-300"
+                onClick={() => window.location.href = '/pricing'}
               >
                 CONHECER A MÁQUINA DE VENDAS
               </Button>

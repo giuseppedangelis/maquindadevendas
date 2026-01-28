@@ -64,13 +64,8 @@ const Header = () => {
               >
                 <NavLink
                   to={item.path}
-                  className={({ isActive }) =>
-                    `text-sm font-medium transition-colors duration-200 hover:text-primary ${
-                      isActive 
-                        ? "text-primary" 
-                        : "text-gray-text/80 hover:text-foreground"
-                    }`
-                  }
+                  className="text-sm font-medium transition-colors duration-200 hover:text-primary text-gray-text/80 hover:text-foreground"
+                  activeClassName="text-primary"
                 >
                   {item.label}
                 </NavLink>
@@ -88,6 +83,7 @@ const Header = () => {
             <Button
               size="sm"
               className="gradient-orange glow-orange-sm hover:scale-105 transition-transform duration-300"
+              onClick={() => window.location.href = '/pricing'}
             >
               Começar Agora
             </Button>
@@ -150,13 +146,8 @@ const Header = () => {
                     <NavLink
                       to={item.path}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={({ isActive }) =>
-                        `block py-2 text-lg font-medium transition-colors duration-200 hover:text-primary ${
-                          isActive 
-                            ? "text-primary" 
-                            : "text-gray-text/80 hover:text-foreground"
-                        }`
-                      }
+                      className="block py-2 text-lg font-medium transition-colors duration-200 hover:text-primary text-gray-text/80 hover:text-foreground"
+                      activeClassName="text-primary"
                     >
                       {item.label}
                     </NavLink>
@@ -171,6 +162,7 @@ const Header = () => {
                   <Button
                     size="lg"
                     className="w-full gradient-orange glow-orange-sm hover:scale-105 transition-transform duration-300"
+                    onClick={() => window.location.href = '/pricing'}
                   >
                     Começar Agora
                   </Button>

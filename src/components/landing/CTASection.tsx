@@ -53,6 +53,7 @@ const CTASection = () => {
             <Button
               size="lg"
               className="gradient-orange text-lg sm:text-xl font-bold px-10 py-7 rounded-xl glow-orange hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
+              onClick={() => window.location.href = '/pricing'}
             >
               <Download className="w-6 h-6 mr-3" />
               BAIXAR O APP AGORA
