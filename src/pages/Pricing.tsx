@@ -1,22 +1,92 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Check, Users, TrendingUp, Shield, Zap, AlertCircle, Phone, Clock, BarChart3, MessageSquare, FileText, HelpCircle, HeadphonesIcon, RefreshCw, Target } from "lucide-react";
+import { Users, TrendingUp, AlertCircle, BarChart3, MessageSquare, FileText, HeadphonesIcon, RefreshCw, Target } from "lucide-react";
+import {
+  buildPlanFromContract,
+  DEFAULT_SITE_MAX_USERS,
+  DEFAULT_SITE_MIN_USERS,
+  formatCurrency,
+} from "@/lib/pricing";
+import { getPublicSitePlans } from "@/services/pricing.service";
 
 const Pricing = () => {
+  const navigate = useNavigate();
   const [userCount, setUserCount] = useState([3]);
 
-  // Preços base por usuário
-  const monthlyPriceSemestral = 117;
-  const monthlyPriceAnual = 97;
+  const { data: contracts, isLoading, isError, refetch } = useQuery({
+    queryKey: ["public-site-plans"],
+    queryFn: getPublicSitePlans,
+    staleTime: 60 * 1000,
+  });
+
+  const semestralContract = useMemo(
+    () => contracts?.find((plan) => plan.code === "semestral") ?? null,
+    [contracts],
+  );
+
+  const anualContract = useMemo(
+    () => contracts?.find((plan) => plan.code === "anual") ?? null,
+    [contracts],
+  );
+
+  const minUsers = useMemo(() => {
+    if (!semestralContract || !anualContract) {
+      return DEFAULT_SITE_MIN_USERS;
+    }
+
+    return Math.max(semestralContract.usersMin, anualContract.usersMin);
+  }, [anualContract, semestralContract]);
+
+  const maxUsers = useMemo(() => {
+    if (!semestralContract || !anualContract) {
+      return DEFAULT_SITE_MAX_USERS;
+    }
+
+    return Math.min(semestralContract.usersMax, anualContract.usersMax);
+  }, [anualContract, semestralContract]);
+
+  useEffect(() => {
+    setUserCount((current) => {
+      const currentValue = current[0] ?? minUsers;
+      const clampedValue = Math.max(minUsers, Math.min(maxUsers, currentValue));
+      if (clampedValue === currentValue) {
+        return current;
+      }
+
+      return [clampedValue];
+    });
+  }, [maxUsers, minUsers]);
+
+  const semestralPlan = semestralContract
+    ? buildPlanFromContract(semestralContract, userCount[0])
+    : null;
+  const anualPlan = anualContract
+    ? buildPlanFromContract(anualContract, userCount[0])
+    : null;
+
+  // Preços base por usuário (fonte: sistema via API pública)
+  const monthlyPriceSemestral = semestralPlan?.monthlyPrice ?? 0;
+  const monthlyPriceAnual = anualPlan?.monthlyPrice ?? 0;
 
   // Cálculo dos valores totais
-  const semestralTotal = userCount[0] * monthlyPriceSemestral;
-  const anualTotal = userCount[0] * monthlyPriceAnual;
+  const semestralTotal = semestralPlan?.totalPrice ?? 0;
+  const anualTotal = anualPlan?.totalPrice ?? 0;
+
+  const annualSavings = Math.max(
+    0,
+    (monthlyPriceSemestral - monthlyPriceAnual) * userCount[0] * 12,
+  );
+
+  const goToCheckout = (plan: "semestral" | "anual") => {
+    navigate(`/checkout?plan=${plan}&users=${userCount[0]}`);
+  };
 
   // Funcionalidades
   const features = [
@@ -87,6 +157,56 @@ const Pricing = () => {
     }
   ];
 
+  if (isLoading) {
+    return (
+      <main className="pt-16 lg:pt-20 min-h-screen bg-background">
+        <section className="py-20 lg:py-32">
+          <div className="container mx-auto px-4 lg:px-8 max-w-2xl">
+            <Card className="border-border/50">
+              <CardContent className="p-10 text-center">
+                <p className="text-sm text-muted-foreground">
+                  Atualizando preços direto do sistema...
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (
+    isError ||
+    !semestralContract ||
+    !anualContract ||
+    !semestralPlan ||
+    !anualPlan
+  ) {
+    return (
+      <main className="pt-16 lg:pt-20 min-h-screen bg-background">
+        <section className="py-20 lg:py-32">
+          <div className="container mx-auto px-4 lg:px-8 max-w-2xl">
+            <Card className="border-border/50">
+              <CardContent className="p-10 text-center space-y-4">
+                <AlertCircle className="w-8 h-8 text-destructive mx-auto" />
+                <h1 className="text-2xl font-bold text-foreground">
+                  Não foi possível carregar os planos
+                </h1>
+                <p className="text-muted-foreground">
+                  Os preços agora vêm somente do sistema. Tente atualizar para carregar os
+                  valores oficiais.
+                </p>
+                <Button onClick={() => void refetch()} className="gradient-orange">
+                  Tentar novamente
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="pt-16 lg:pt-20 min-h-screen bg-background">
       {/* Hero Section */}
@@ -114,6 +234,7 @@ const Pricing = () => {
               Chega de surpresas. Nossa precificação é simples e direta, baseada no tamanho do seu time. 
               Todos os planos incluem acesso total a todas as funcionalidades do App Máquina de Vendas.
             </p>
+
           </motion.div>
         </div>
       </section>
@@ -142,26 +263,26 @@ const Pricing = () => {
               <Slider
                 value={userCount}
                 onValueChange={setUserCount}
-                max={20}
-                min={3}
+                max={maxUsers}
+                min={minUsers}
                 step={1}
                 className="w-full"
               />
               
               <div className="flex justify-between text-sm text-gray-text">
-                <span>3</span>
-                <span>20</span>
+                <span>{minUsers}</span>
+                <span>{maxUsers}</span>
               </div>
 
               <div className="text-center">
                 <Input
                   type="number"
-                  min={3}
-                  max={20}
+                  min={minUsers}
+                  max={maxUsers}
                   value={userCount[0]}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value) || 3;
-                    setUserCount([Math.min(20, Math.max(3, value))]);
+                    const value = parseInt(e.target.value, 10) || minUsers;
+                    setUserCount([Math.min(maxUsers, Math.max(minUsers, value))]);
                   }}
                   className="max-w-xs mx-auto text-center text-lg"
                   placeholder="Digite o número de usuários"
@@ -196,20 +317,20 @@ const Pricing = () => {
 
                   <div className="text-center mb-6">
                     <div className="text-4xl font-black gradient-text mb-2">
-                      R$ {monthlyPriceSemestral}
+                      {formatCurrency(monthlyPriceSemestral)}
                     </div>
                     <p className="text-gray-text">por usuário/mês</p>
                     <p className="text-sm text-gray-text mt-2">
-                      Cobrado semestralmente | Mínimo de 3 usuários
+                      Cobrado semestralmente | Mínimo de {semestralContract.usersMin} usuários
                     </p>
                   </div>
 
                   <div className="text-center mb-6">
                     <div className="text-xl font-semibold text-foreground">
-                      Total: R$ {semestralTotal.toLocaleString('pt-BR')}/mês
+                      Total: {formatCurrency(userCount[0] * monthlyPriceSemestral)}/mês
                     </div>
                     <div className="text-sm text-gray-text">
-                      R$ {(semestralTotal * 6).toLocaleString('pt-BR')} por 6 meses
+                      {formatCurrency(semestralTotal)} por 6 meses
                     </div>
                   </div>
 
@@ -218,6 +339,7 @@ const Pricing = () => {
                       size="lg"
                       className="w-full py-6 text-lg font-semibold hover:scale-105 transition-transform duration-300"
                       variant="outline"
+                      onClick={() => goToCheckout("semestral")}
                     >
                       Contratar Plano Semestral
                     </Button>
@@ -254,23 +376,23 @@ const Pricing = () => {
 
                   <div className="text-center mb-6">
                     <div className="text-4xl font-black gradient-text mb-2">
-                      R$ {monthlyPriceAnual}
+                      {formatCurrency(monthlyPriceAnual)}
                     </div>
                     <p className="text-gray-text">por usuário/mês</p>
                     <p className="text-sm text-gray-text mt-2">
-                      Cobrado anualmente | Mínimo de 3 usuários
+                      Cobrado anualmente | Mínimo de {anualContract.usersMin} usuários
                     </p>
                   </div>
 
                   <div className="text-center mb-6">
                     <div className="text-xl font-semibold text-foreground">
-                      Total: R$ {anualTotal.toLocaleString('pt-BR')}/mês
+                      Total: {formatCurrency(userCount[0] * monthlyPriceAnual)}/mês
                     </div>
                     <div className="text-sm text-gray-text">
-                      R$ {(anualTotal * 12).toLocaleString('pt-BR')} por 12 meses
+                      {formatCurrency(anualTotal)} por 12 meses
                     </div>
                     <div className="text-sm text-green-500 font-semibold mt-1">
-                      Economia: R$ {((monthlyPriceSemestral - monthlyPriceAnual) * userCount[0] * 12).toLocaleString('pt-BR')}/ano
+                      Economia: {formatCurrency(annualSavings)}/ano
                     </div>
                   </div>
 
@@ -278,6 +400,7 @@ const Pricing = () => {
                     <Button
                       size="lg"
                       className="w-full py-6 text-lg font-semibold gradient-orange glow-orange hover:scale-105 transition-transform duration-300"
+                      onClick={() => goToCheckout("anual")}
                     >
                       Quero o Plano Anual!
                     </Button>
