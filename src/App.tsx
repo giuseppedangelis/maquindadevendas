@@ -13,6 +13,7 @@ import AccountDeletion from "./pages/AccountDeletion";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutActivation from "./pages/CheckoutActivation";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/account-deletion" element={<AccountDeletion />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkout/sucesso" element={<CheckoutSuccess />} />
+              <Route path="/checkout/ativacao" element={<CheckoutActivation />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

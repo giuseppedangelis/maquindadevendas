@@ -1,7 +1,7 @@
 import { PlanCode, PublicSitePlanContract } from "./types";
 import { buildSiteApiUrl } from "./siteApi";
 
-export const PUBLIC_SITE_PLANS_ENDPOINT = "/public/site/plans";
+export const PUBLIC_SITE_PLANS_ENDPOINT = "/plans";
 const SUPABASE_SITE_PLAN_PRICING_QUERY =
   "/rest/v1/site_plan_pricing?select=plan_code,label,cycle_months,unit_price_monthly,min_users,max_users,active&active=eq.true&order=cycle_months.asc";
 const ENABLE_SUPABASE_FALLBACK =
@@ -40,7 +40,9 @@ function normalizeBillingCycle(
   return null;
 }
 
-function normalizeContract(record: UnknownPlanRecord): PublicSitePlanContract | null {
+function normalizeContract(
+  record: UnknownPlanRecord,
+): PublicSitePlanContract | null {
   const code =
     record.code ??
     record.plan ??
@@ -53,7 +55,10 @@ function normalizeContract(record: UnknownPlanRecord): PublicSitePlanContract | 
   }
 
   const billingCycle = normalizeBillingCycle(
-    record.billingCycle ?? record.billing_cycle ?? record.cycleMonths ?? record.cycle_months,
+    record.billingCycle ??
+      record.billing_cycle ??
+      record.cycleMonths ??
+      record.cycle_months,
   );
 
   if (!billingCycle) {
@@ -163,12 +168,15 @@ async function fetchContractsFromSupabase(): Promise<PublicSitePlanContract[]> {
 
 export async function getPublicSitePlans(): Promise<PublicSitePlanContract[]> {
   try {
-    return await fetchContractsFromEndpoint(buildSiteApiUrl(PUBLIC_SITE_PLANS_ENDPOINT), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    return await fetchContractsFromEndpoint(
+      buildSiteApiUrl(PUBLIC_SITE_PLANS_ENDPOINT),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
   } catch (apiError) {
     if (!ENABLE_SUPABASE_FALLBACK) {
       throw apiError;
@@ -180,7 +188,9 @@ export async function getPublicSitePlans(): Promise<PublicSitePlanContract[]> {
       const apiMessage =
         apiError instanceof Error ? apiError.message : "erro desconhecido";
       const supabaseMessage =
-        supabaseError instanceof Error ? supabaseError.message : "erro desconhecido";
+        supabaseError instanceof Error
+          ? supabaseError.message
+          : "erro desconhecido";
 
       throw new Error(
         `Falha ao buscar planos públicos (api: ${apiMessage}; supabase: ${supabaseMessage})`,

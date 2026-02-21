@@ -84,6 +84,11 @@ const Checkout = () => {
     };
 
     localStorage.setItem(LATEST_CHECKOUT_SESSION_KEY, JSON.stringify(latestSession));
+    if (response.checkoutUrl) {
+      window.location.assign(response.checkoutUrl);
+      return;
+    }
+
     navigate("/checkout/sucesso", { state: latestSession });
   };
 

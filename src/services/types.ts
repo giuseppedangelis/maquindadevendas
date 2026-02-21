@@ -41,6 +41,47 @@ export interface CreateCheckoutSessionResponse {
   expiresAt?: string;
 }
 
+export interface CheckoutSessionDetailsResponse {
+  sessionId: string;
+  status:
+    | "CREATED"
+    | "PENDING"
+    | "PAID"
+    | "ACTIVATION_PENDING"
+    | "ACTIVATED"
+    | "EXPIRED"
+    | "CANCELLED"
+    | "FAILED";
+  checkoutUrl?: string;
+  expiresAt?: string;
+  plan?: PlanCode;
+  users?: number;
+  cycleTotal?: number;
+}
+
+export interface ActivateManagerRequest {
+  token: string;
+  password: string;
+  sendInvite?: boolean;
+}
+
+export interface ActivateManagerResponse {
+  success: boolean;
+  userId?: string;
+  companyId?: string;
+  error?: string;
+}
+
+export interface ActivateManagerPreviewResponse {
+  success: boolean;
+  customer?: {
+    name: string;
+    email: string;
+    mobilePhone: string;
+  };
+  error?: string;
+}
+
 export interface LatestCheckoutSession {
   createdAt: string;
   request: CreateCheckoutSessionRequest;
