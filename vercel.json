@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+        {
+            "source": "/sistema",
+            "destination": "https://maquinadevendas-seven.vercel.app/"
+        },
+        {
+            "source": "/sistema/:match*",
+            "destination": "https://maquinadevendas-seven.vercel.app/:match*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}

@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Máquina de Vendas - Dark Theme */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 18 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 18 100% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 18 100% 60%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors */
+    --orange-primary: 18 100% 60%;
+    --orange-light: 22 100% 67%;
+    --orange-dark: 16 84% 53%;
+    --gray-dark: 0 0% 10%;
+    --gray-medium: 0 0% 20%;
+    --gray-text: 0 0% 88%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-montserrat antialiased;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(0 0% 5%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsla(18, 100%, 60%, 0.4);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsla(18, 100%, 60%, 0.6);
+  }
+}
+
+@layer utilities {
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--orange-primary)) 0%, hsl(var(--orange-light)) 100%);
+  }
+
+  /* Gradient Background */
+  .gradient-orange {
+    background: linear-gradient(135deg, hsl(var(--orange-primary)) 0%, hsl(var(--orange-light)) 100%);
+  }
+
+  /* Glow Effects */
+  .glow-orange {
+    box-shadow: 0 0 40px hsla(18, 100%, 60%, 0.3);
+  }
+
+  .glow-orange-sm {
+    box-shadow: 0 0 20px hsla(18, 100%, 60%, 0.2);
+  }
+
+  /* Card Hover Effect */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 30px hsla(18, 100%, 60%, 0.15);
+  }
+
+  /* Hero Background Pattern */
+  .hero-pattern {
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, hsla(18, 100%, 60%, 0.08) 0%, transparent 50%),
+      linear-gradient(180deg, transparent 0%, hsl(0 0% 0%) 100%);
+  }
+
+  /* Center Glow */
+  .center-glow {
+    background: radial-gradient(ellipse at center, hsla(18, 100%, 60%, 0.1) 0%, transparent 60%);
+  }
+
+  /* Text Shadow */
+  .text-glow {
+    text-shadow: 0 0 30px hsla(18, 100%, 60%, 0.5);
+  }
+}
