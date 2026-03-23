@@ -114,7 +114,7 @@ Projeto React moderno com TypeScript, focado em componentes UI reutilizáveis e 
 - **[@types/react-dom](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom)** `^18.3.7`
 
 ### Plugins de Desenvolvimento
-- **[lovable-tagger](https://lovable.dev/)** `^1.1.13` - Component development tooling
+- **[@vitejs/plugin-react-swc](https://www.npmjs.com/package/@vitejs/plugin-react-swc)** `^3.11.0` - Plugin React com SWC para Vite
 
 ---
 
